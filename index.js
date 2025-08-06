@@ -24,7 +24,7 @@ const verifyToken = async (req, res, next) => {
 };
 
 app.get("/", (req, res) => {
-    res.send("this is thiru from listoBackend!");
+    res.send("this is vishnu!");
 });
 
 app.get("/profile", verifyToken, (req, res) => {
@@ -32,6 +32,22 @@ app.get("/profile", verifyToken, (req, res) => {
         message: "Protected profile route!",
         user: req.user,
     });
+});
+
+app.get("/custom-token", async (req, res) => {
+    const uid = req.query.uid;
+
+    if (!uid) {
+        return res.status(400).json({ error: "UID is required" });
+    }
+
+    try {
+        const customToken = await admin.auth().createCustomToken(uid);
+        res.json({ token: customToken });
+    } catch (error) {
+        console.error("Error creating custom token:", error);
+        res.status(500).json({ error: "Failed to create custom token" });
+    }
 });
 
 app.listen(PORT, () => {
