@@ -23,8 +23,8 @@ const verifyToken = async (req, res, next) => {
     }
 };
 
-app.get("/", (req, res) => {
-    res.send("this is vishnu!");
+app.get("/contact", (req, res) => {
+    res.send("this is listoBackend");
 });
 
 app.get("/profile", verifyToken, (req, res) => {
